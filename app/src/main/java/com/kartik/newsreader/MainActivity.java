@@ -1,5 +1,6 @@
 package com.kartik.newsreader;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Looper;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     int currentProgress = 0;
 
-    public class GetHTML extends AsyncTask<String, Void, String> {
+    /*public class GetHTML extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -78,8 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 
+    @SuppressLint("StaticFieldLeak")
     public class GetNews extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -148,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("StaticFieldLeak")
     public class GetID extends AsyncTask<String, Void, String> {
 
 
@@ -190,10 +193,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
 
-            if(s == null) {
-                return;
-            }
-            else {
+            if(s != null) {
                 storyIDs = s.substring(s.indexOf("[") + 2, s.indexOf("]")).split(", ");
                 Log.i("ID", storyIDs[0]);
                 transactionComplete = true;

@@ -3,75 +3,333 @@
 
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\b3b1158e584016a38659dc1d9829de4a281652e5\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/play-services-tasks-11.4.2.aar/73db550ec7d74cfc35297775ddeb0d30/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_f189ddfcbefdbd72ae83177aee4e91c42427f9a3.jar" />
+        revision="26.0.2"
+        sha1="643a2fd3bd06c44be5d20efc0ba4ca02036d2c8a">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/12.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\b62a2566a28d9d9089db1436bf1abf89d6b9dd53\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/play-services-base-11.4.2.aar/c30f994bb3696cc7763deb4ff5c125e7/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_7ccca20b495318918bb27e6da49b2869e3edb6e9.jar" />
+        revision="26.0.2"
+        sha1="2d45b277afdf55bcfdc005c03c0c2f1733aaa1b0">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/7.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\cbdc6f9472e7c41a7eabc036bc86cda832b98580\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.1.0.aar/8c349c97a80cfe4122f0276beeeed23b/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_a472a292481125954f3129bc480a7c52010dcdc9.jar" />
+        revision="26.0.2"
+        sha1="508f50705b4fde51a16259f29c854201a3044516">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/16.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\c7303c87e4f070a9502dec8ebb96012169507d28\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.1.0.aar/17c8d7e0d9f999d1c56e6c4ffea25f6a/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_eec580a01f7ed8638716119ae31848a50550993e.jar" />
+        revision="26.0.2"
+        sha1="233f60a165ae622c8b36731502ebbda0f65e1930">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/18.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\f7453786f5ef0a4c74b8324cb88b3e2d2e6765b4\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.1.0.aar/5663caf72f64b79a9ecb51da435555e3/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_786417d2049afab793974ddf52ebfdbb37d618ad.jar" />
+        revision="26.0.2"
+        sha1="40392f30a601db5675cdf18192aab013d6fee6ec">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/5.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\361d0887b1d3a4704854e919225526ff6f371fdc\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-compat-25.4.0.aar/0cf5e4aed8c69fec2d2f1d8826853de6/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_1b3800b785c03e2cb295ba9b27265701833f23db.jar" />
+        revision="26.0.2"
+        sha1="a64026daf4819a589aea776f5deb19b257a104d1">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/19.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\3185586f8ed0f0e74a1645bef79575f9aa5773ee\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/modules-2/files-2.1/com.android.support.constraint/constraint-layout-solver/1.1.0-beta3/1a822bfce8ec55cadddedfe602f8c523250d7bc6/constraint-layout-solver-1.1.0-beta3.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_fd17b5347136a8efee7c82e726748eb609a78281.jar" />
+        revision="26.0.2"
+        sha1="1a822bfce8ec55cadddedfe602f8c523250d7bc6">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/21.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\6e3788526e9bcf3e867ec36f28a6d002b0f1d371\output\jars\classes.jar"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-v4-26.1.0.aar/c4d1a6748cbc05d813919fcac811bbca/jars/classes.jar"
         jumboMode="false"
+        min-sdk-version="19"
         optimize="true"
-        revision="25.0.2"
-        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
-        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_5e98106b1a7c4e5c1d31cb82e21183dc772db0ff.jar" />
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/firebase-common-11.4.2.aar/fc840c9278d87d2bc5fc24e86bfb730d/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="5f519b8c692038a47ee404b6ea6b847f6402000c">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/11.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/firebase-iid-11.4.2.aar/b1e1751875337005732df3a1b1d53dec/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6e6b94b72d7912a627fb1629c310b2bca9261f06">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/10.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/firebase-analytics-11.4.2.aar/79fe9a303c6ed67cc40443e58add60e8/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="bed98ea7af8c5c4202820875e856dd3eb296e22d">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/appcompat-v7-25.4.0.aar/1df0153c52445d9f6cf9a3da765a1831/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a7a0aa678c3bbadb67fb41df9e107f7ee9087902">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/1.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-fragment-26.1.0.aar/0f7879480eb21201b3a4cedee8d5762f/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="7efef32744ca4a436492d5cf28c08698cc2af256">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/runtime-1.0.0.aar/1013c2c587154b8eef895d700d7fe5b2/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b62fdc4cfef174c1e456014195c83fa7de7dc041">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/28.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-core-ui-25.4.0.aar/9f571b128caea706b7100ee867b1c056/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="c2deeac83ffa1304264bc755c2ddb84e7a7fa239">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/16.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/6d85ef7e433790f938f20c2f5f66c391/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f97cf85b0fe70d37a705111dafa6b1b418ea1650">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-core-utils-25.4.0.aar/59f638d7c91c6c92682e4b2605209697/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e04f28ac2dd9bbe48ced6fc87fedf46c2586f5d6">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/firebase-auth-11.4.2.aar/b183e49a3bbc48a38e2badd2aaa34b58/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="52339832d252da4328c5ffcacbc205268346362a">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/25.4.0/f6a2fc748ae3769633dea050563e1613e93c135e/support-annotations-25.4.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f6a2fc748ae3769633dea050563e1613e93c135e">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-compat-26.1.0.aar/bfbf44a3acdb346c094b9de4f0ca24ba/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="2442771a5590dd4eb4bce00c2e9dca9e22e4c963">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/19.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-25.4.0.aar/7030bb2cdb26da8ea63dd9ec147caca2/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="b77e50b3c31d0fc64148530f7077f79ec114b5b9">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-11.4.2.aar/93a11543f27f598c3b5590d83281edaa/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="20d6aa9a18ea9833cd2bee95dff7cd303cdb80e4">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-media-compat-25.4.0.aar/c8ecdbaa54ec802a087b1ab190dc4c90/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="05e3d15c623cd98f0eb43c8249fb6151fae0786c">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/17.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/play-services-basement-11.4.2.aar/ee41e8e45cf8f50f31f2242fa5d76516/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="8040d53ecd4bd895360eafdc25e1c1cc9479e6aa">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/13.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.0.0/a2d487452376193fc8c103dd2b9bd5f2b1b44563/common-1.0.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="a2d487452376193fc8c103dd2b9bd5f2b1b44563">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/31.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-fragment-25.4.0.aar/794e51ac09576c3e87cf4d8488a8a5fa/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d29e451fd5bcc265989bf80afd4f149d95d72e7d">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/15.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-v4-25.4.0.aar/ec64b6cba071f176cb26ee1b57643f19/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/14.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.0-beta3.aar/bea03be9016b0dbe10bafc609553294e/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="55a56e57f9c69ec1e3099ceb677c7be501e9f79c">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-25.4.0.aar/fcad5f8aa7af69ea743bdc54be145081/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="4961be1437163ab598620a3c907c0f3432936f51">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.1.0.aar/632ff75b6fbadaf25ea4ba332ac84647/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="6f4138a4e065826cb044d49faea4cfd7191773d1">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.0.0/e414a4cb28434e25c4f6aa71426eb20cf4874ae9/common-1.0.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="e414a4cb28434e25c4f6aa71426eb20cf4874ae9">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/30.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/26.1.0/814258103cf26a15fcc26ecce35f5b7d24b73f8/support-annotations-26.1.0.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="0814258103cf26a15fcc26ecce35f5b7d24b73f8">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/20.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/kartik/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.1.0.aar/2ecb082fde5f6ad7701a09498603d8d3/jars/classes.jar"
+        jumboMode="false"
+        min-sdk-version="19"
+        optimize="true"
+        revision="26.0.2"
+        sha1="f428e2fbc9ed0b297e3a3f420e51e6982f66822d">
+        <dex dex="/home/kartik/Documents/AndroidStudioProjects/NewsReader/app/build/intermediates/transforms/preDex/release/1.jar" />
     </item>
 
 </items>
