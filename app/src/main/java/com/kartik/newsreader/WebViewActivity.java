@@ -31,6 +31,7 @@ public class WebViewActivity extends AppCompatActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 findViewById(R.id.progressBar1).setVisibility(View.VISIBLE);
                 findViewById(R.id.webview).setVisibility(View.GONE);
+
             }
 
             @Override

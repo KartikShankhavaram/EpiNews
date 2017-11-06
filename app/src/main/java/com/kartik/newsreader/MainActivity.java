@@ -2,7 +2,6 @@ package com.kartik.newsreader;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,14 +19,13 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView listView;
-    ArrayAdapter arrayAdapter;
+    ArrayAdapter<String> arrayAdapter;
     ArrayList<String> titleList = new ArrayList<>();
     ArrayList<String> urlList = new ArrayList<>();
     ArrayList<String> htmlList = new ArrayList<>();
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class GetNews extends AsyncTask<String, Void, String> {
+    public class GetNews extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -92,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
 
                 InputStream in = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
+
+                publishProgress(++currentProgress);
 
                 String result = "";
                 int data = reader.read();
@@ -127,9 +127,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Titles", titleList.toString());
                 if(titleList != null && titleList.size() == listSize) {
                     findViewById(R.id.loadingPane1).setVisibility(View.GONE);
-                    arrayAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, titleList);
+                    arrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1, titleList);
                     listView.setAdapter(arrayAdapter);
                     Log.i("URL", urlList.toString());
+                    findViewById(R.id.listview).setVisibility(View.VISIBLE);
                 }
 
             } catch (JSONException e) {
@@ -138,10 +139,16 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            progressBar.setProgress(values[0]);
+        }
     }
 
 
-    public class GetID extends AsyncTask<String, Integer, String> {
+    public class GetID extends AsyncTask<String, Void, String> {
 
 
         @Override
@@ -166,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     data = reader.read();
 
                 }
-                publishProgress(++currentProgress);
+
 
                 return textIDs;
 
@@ -182,9 +189,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            findViewById(R.id.loadingPane).setVisibility(View.GONE);
-            findViewById(R.id.loadingPane1).setVisibility(View.GONE);
-            findViewById(R.id.listview).setVisibility(View.VISIBLE);
+
             if(s == null) {
                 return;
             }
@@ -192,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
                 storyIDs = s.substring(s.indexOf("[") + 2, s.indexOf("]")).split(", ");
                 Log.i("ID", storyIDs[0]);
                 transactionComplete = true;
-                GetNews getNews = new GetNews();
+                progressBar.setIndeterminate(false);
                 for(int i = 0; i < listSize; i++) {
                     int id = Integer.parseInt(storyIDs[i]);
                     new GetNews().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty");
@@ -203,11 +208,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            progressBar.setProgress(values[0]);
-        }
     }
 
 
@@ -217,11 +217,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listView = (ListView) findViewById(R.id.listview);
+        findViewById(R.id.listview).setVisibility(View.GONE);
+        findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
         GetID getID = new GetID();
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         progressBar.setMax(listSize);
+        progressBar.setIndeterminate(true);
 
         getID.execute("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
 
