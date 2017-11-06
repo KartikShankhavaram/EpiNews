@@ -7,6 +7,8 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,6 +26,27 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id) {
+            case R.id.menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+
+            default:
+                return false;
+
+        }
+    }
 
     ListView listView;
     ArrayAdapter<String> arrayAdapter;
@@ -216,12 +239,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
         findViewById(R.id.listview).setVisibility(View.GONE);
         findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
+        findViewById(R.id.splash).setVisibility(View.GONE);
         GetID getID = new GetID();
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         progressBar.setMax(listSize);
         progressBar.setIndeterminate(true);
