@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">News Reader</string>
+    <string name="loading_text">Loading news...</string>
+</resources>

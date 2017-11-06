@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\b3b1158e584016a38659dc1d9829de4a281652e5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="433f4d6aa5f21f19552afe0e6c5eff0fedba73ad">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_f189ddfcbefdbd72ae83177aee4e91c42427f9a3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\b62a2566a28d9d9089db1436bf1abf89d6b9dd53\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="25438f55fc6d906a0e72f30b21487541430ede43">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_7ccca20b495318918bb27e6da49b2869e3edb6e9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\cbdc6f9472e7c41a7eabc036bc86cda832b98580\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="756f6297eef79784f5e356dcd4f39865028b2bd0">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_a472a292481125954f3129bc480a7c52010dcdc9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\c7303c87e4f070a9502dec8ebb96012169507d28\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="486371f97baad8e607f332f20fee1d3dd00a731a">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_eec580a01f7ed8638716119ae31848a50550993e.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\f7453786f5ef0a4c74b8324cb88b3e2d2e6765b4\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6addaba208e21c6da776d0ca75b6b23a6ccd5499">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_786417d2049afab793974ddf52ebfdbb37d618ad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\361d0887b1d3a4704854e919225526ff6f371fdc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9cca2818594cc5348806d6662133491e7ea0fa8d">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_1b3800b785c03e2cb295ba9b27265701833f23db.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\3185586f8ed0f0e74a1645bef79575f9aa5773ee\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_fd17b5347136a8efee7c82e726748eb609a78281.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Kartik Shankhavaram\.android\build-cache\6e3788526e9bcf3e867ec36f28a6d002b0f1d371\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
+        <dex dex="E:\Android\AndroidStudioProjects\NewsReader\app\build\intermediates\pre-dexed\debug\classes_5e98106b1a7c4e5c1d31cb82e21183dc772db0ff.jar" />
+    </item>
+
+</items>
