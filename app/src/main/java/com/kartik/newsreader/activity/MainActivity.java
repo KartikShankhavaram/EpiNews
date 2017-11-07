@@ -90,19 +90,18 @@ public class MainActivity extends AppCompatActivity {
                 newsInfo.setTitle(newsJSON.getString("title"));
                 newsInfo.setUrl(newsJSON.getString("url"));
                 newsInfo.setAuthor(newsJSON.getString("by"));
-                newsInfoList.add(index, newsInfo);
-                index++;
-                if(newsInfoList != null && newsInfoList.size() == listSize) {
-                    findViewById(R.id.loadingPane1).setVisibility(View.GONE);
-                    newsAdapter = new NewsAdapter(newsInfoList);
-                    recyclerView.setAdapter(newsAdapter);
-                    findViewById(R.id.recycler_view).setVisibility(View.VISIBLE);
-                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            newsInfoList.add(index, newsInfo);
+            index++;
+            if(newsInfoList != null && newsInfoList.size() == listSize) {
+                findViewById(R.id.loadingPane1).setVisibility(View.GONE);
+                newsAdapter = new NewsAdapter(newsInfoList);
+                recyclerView.setAdapter(newsAdapter);
+                findViewById(R.id.recycler_view).setVisibility(View.VISIBLE);
+            }
 
         }
 

@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.kartik.newsreader.R;
 
@@ -16,6 +18,8 @@ import java.net.URL;
 
 public class WebViewActivity extends AppCompatActivity {
     WebView webView;
+    ProgressBar pBar;
+    final int maxProgress = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,28 +28,30 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
 
         webView = findViewById(R.id.webview);
+        pBar = findViewById(R.id.progressBar);
+        pBar.setMax(maxProgress);
+        pBar.setProgress(0);
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setSupportMultipleWindows(true);
 
-        webView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                findViewById(R.id.progressBar1).setVisibility(View.VISIBLE);
-                findViewById(R.id.webview).setVisibility(View.GONE);
-
-            }
-
+        webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageFinished(WebView view, String url) {
-                findViewById(R.id.progressBar1).setVisibility(View.GONE);
-
-                findViewById(R.id.webview).setVisibility(View.VISIBLE);
+                super.onPageFinished(view, url);
+                pBar.setVisibility(View.GONE);
             }
         });
 
-
+        webView.setWebChromeClient(new WebChromeClient(){
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                pBar.setProgress(newProgress);
+                pBar.setVisibility(View.VISIBLE);
+                
+            }
+        });
 
         Intent page = getIntent();
 
