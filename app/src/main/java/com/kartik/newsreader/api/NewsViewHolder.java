@@ -1,4 +1,4 @@
-package com.kartik.newsreader.card_view;
+package com.kartik.newsreader.api;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,10 +14,10 @@ import com.kartik.newsreader.R;
 
 public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-    TextView titleView;
-    TextView authorView;
-    Button visitSite;
-    ImageView thumbNail;
+    private TextView titleView;
+    private TextView authorView;
+    private Button visitSite;
+    private ImageView thumbNail;
 
     public NewsViewHolder(View v) {
         super(v);
@@ -28,4 +28,21 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         thumbNail = v.findViewById(R.id.thumbnail);
 
     }
+
+    public TextView getTitleView() {
+        return titleView;
+    }
+
+    public TextView getAuthorView() {
+        return authorView;
+    }
+
+    public Button getVisitSite() {
+        return visitSite;
+    }
+
+    public ImageView getThumbNail() {
+        return thumbNail;
+    }
+
 }

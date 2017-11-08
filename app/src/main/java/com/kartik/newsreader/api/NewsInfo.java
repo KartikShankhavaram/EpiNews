@@ -1,4 +1,4 @@
-package com.kartik.newsreader.card_view;
+package com.kartik.newsreader.api;
 
 import android.media.Image;
 
@@ -11,7 +11,7 @@ public class NewsInfo {
     private String author;
     private String url;
     private String thumbNailURL;
-    protected static final String AUTHOR_PREFIX = "by ";
+    public static final String AUTHOR_PREFIX = "by ";
 
     public String getTitle() {
         return title;

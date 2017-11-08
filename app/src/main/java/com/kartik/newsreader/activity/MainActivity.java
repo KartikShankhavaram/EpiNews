@@ -4,25 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.kartik.newsreader.R;
-import com.kartik.newsreader.api.PublicationInfo;
-import com.kartik.newsreader.card_view.NewsAdapter;
-import com.kartik.newsreader.card_view.NewsInfo;
+import com.kartik.newsreader.adapter.NewsAdapter;
+import com.kartik.newsreader.api.NewsInfo;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +25,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -139,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        getPublication.execute("https://newsapi.org/v1/sources?language=en");
+        //getPublication.execute("https://newsapi.org/v1/sources?language=en");
 
 
     }

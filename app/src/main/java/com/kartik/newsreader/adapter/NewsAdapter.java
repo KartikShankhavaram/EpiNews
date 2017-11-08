@@ -1,4 +1,4 @@
-package com.kartik.newsreader.card_view;
+package com.kartik.newsreader.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.activity.WebViewActivity;
 
-import com.bumptech.glide.Glide;
+import com.kartik.newsreader.api.NewsInfo;
+import com.kartik.newsreader.api.NewsViewHolder;
 import com.kartik.newsreader.glide.GlideApp;
 
 
@@ -42,9 +43,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         final NewsInfo info = newsList.get(position);
-        holder.authorView.setText(NewsInfo.AUTHOR_PREFIX + info.getAuthor());
-        holder.titleView.setText(info.getTitle());
-        holder.visitSite.setOnClickListener(new View.OnClickListener() {
+        holder.getAuthorView().setText(NewsInfo.AUTHOR_PREFIX + info.getAuthor());
+        holder.getTitleView().setText(info.getTitle());
+        holder.getVisitSite().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), WebViewActivity.class);
@@ -56,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 .load(info.getThumbNailURL())
                 .placeholder(R.drawable.loading_spinner)
                 .fitCenter()
-                .into(holder.thumbNail);
+                .into(holder.getThumbNail());
 
     }
 
