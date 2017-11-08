@@ -1,5 +1,7 @@
 package com.kartik.newsreader.card_view;
 
+import android.media.Image;
+
 /**
  * Created by kartik on 7/11/17.
  */
@@ -8,6 +10,7 @@ public class NewsInfo {
     private String title;
     private String author;
     private String url;
+    private String thumbNailURL;
     protected static final String AUTHOR_PREFIX = "by ";
 
     public String getTitle() {
@@ -34,4 +37,11 @@ public class NewsInfo {
         this.url = url;
     }
 
+    public String getThumbNailURL() {
+        return thumbNailURL;
+    }
+
+    public void setThumbNailURL(String thumbNailURL) {
+        this.thumbNailURL = thumbNailURL;
+    }
 }

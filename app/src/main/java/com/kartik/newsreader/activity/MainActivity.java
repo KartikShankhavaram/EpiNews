@@ -2,6 +2,7 @@ package com.kartik.newsreader.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.kartik.newsreader.R;
+import com.kartik.newsreader.api.PublicationInfo;
 import com.kartik.newsreader.card_view.NewsAdapter;
 import com.kartik.newsreader.card_view.NewsInfo;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,17 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     NewsAdapter newsAdapter;
-    ArrayList<NewsInfo> newsInfoList = new ArrayList<NewsInfo>();
+    ArrayList<NewsInfo> newsInfoList = new ArrayList<>();
     NewsInfo newsInfo;
-    URL url1, url2;
-    HttpURLConnection httpURLConnection, urlConnection;
-    String textIDs;
-    String[] storyIDs = new String[] {};
+    URL url2;
+    HttpURLConnection urlConnection;
     int index = 0;
-    Boolean transactionComplete = false;
     int listSize = 30;
     ProgressBar progressBar;
     int currentProgress = 0;
+    SharedPreferences sharedPreferences;
 
     @SuppressLint("StaticFieldLeak")
     public class GetNews extends AsyncTask<String, Integer, String> {
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             index++;
             if(newsInfoList != null && newsInfoList.size() == listSize) {
                 findViewById(R.id.loadingPane1).setVisibility(View.GONE);
-                newsAdapter = new NewsAdapter(newsInfoList);
+                newsAdapter = new NewsAdapter(newsInfoList, getApplicationContext());
                 recyclerView.setAdapter(newsAdapter);
                 findViewById(R.id.recycler_view).setVisibility(View.VISIBLE);
             }
@@ -113,82 +114,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("StaticFieldLeak")
-    public class GetID extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            Looper.prepare();
-            try {
-
-                url1 = new URL(urls[0]);
-                httpURLConnection = (HttpURLConnection) url1.openConnection();
-
-                InputStream inputStream = httpURLConnection.getInputStream();
-                InputStreamReader reader = new InputStreamReader(inputStream);
-
-                int data = reader.read();
-                char current;
-
-                while(data != -1) {
-
-                    current = (char) data;
-                    textIDs += current;
-                    data = reader.read();
-
-                }
-
-
-                return textIDs;
-
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Couldn't get the current news", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-
-            if(s != null) {
-                storyIDs = s.substring(s.indexOf("[") + 2, s.indexOf("]")).split(", ");
-                Log.i("ID", storyIDs[0]);
-                transactionComplete = true;
-                progressBar.setIndeterminate(false);
-                for(int i = 0; i < listSize; i++) {
-                    int id = Integer.parseInt(storyIDs[i]);
-                    new GetNews().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "https://hacker-news.firebaseio.com/v0/item/" + id + ".json?print=pretty");
-                }
-
-            }
-
-
-        }
-
-    }
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*setTheme(R.style.SplashTheme);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            Log.i("Splash", "Failed");
-        }
-        setTheme(R.style.AppTheme);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
         findViewById(R.id.splash).setVisibility(View.GONE);
-        GetID getID = new GetID();
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -202,7 +134,12 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setMax(listSize);
         progressBar.setIndeterminate(true);
 
-        getID.execute("https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty");
+        sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        if(sharedPreferences.getString("pubID", "").equals("")) {
+
+        }
+
+        getPublication.execute("https://newsapi.org/v1/sources?language=en");
 
 
     }

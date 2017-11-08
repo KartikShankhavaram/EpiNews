@@ -49,7 +49,7 @@ public class WebViewActivity extends AppCompatActivity {
                 super.onProgressChanged(view, newProgress);
                 pBar.setProgress(newProgress);
                 pBar.setVisibility(View.VISIBLE);
-                
+
             }
         });
 

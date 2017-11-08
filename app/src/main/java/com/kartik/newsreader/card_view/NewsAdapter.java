@@ -1,5 +1,6 @@
 package com.kartik.newsreader.card_view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.activity.WebViewActivity;
+
+import com.bumptech.glide.Glide;
+import com.kartik.newsreader.glide.GlideApp;
+
 
 import java.util.ArrayList;
 
@@ -18,9 +23,11 @@ import java.util.ArrayList;
 public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     public ArrayList<NewsInfo> newsList;
+    public Context mContext;
 
-    public NewsAdapter(ArrayList<NewsInfo> newsList) {
+    public NewsAdapter(ArrayList<NewsInfo> newsList, Context mContext) {
         this.newsList = newsList;
+        this.mContext = mContext;
     }
 
     @Override
@@ -45,6 +52,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 v.getContext().startActivity(intent);
             }
         });
+        GlideApp.with(mContext)
+                .load(info.getThumbNailURL())
+                .placeholder(R.drawable.loading_spinner)
+                .fitCenter()
+                .into(holder.thumbNail);
+
     }
 
     @Override
