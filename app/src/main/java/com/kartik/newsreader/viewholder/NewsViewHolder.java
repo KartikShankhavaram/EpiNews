@@ -1,4 +1,4 @@
-package com.kartik.newsreader.api;
+package com.kartik.newsreader.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

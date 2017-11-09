@@ -1,5 +1,6 @@
 package com.kartik.newsreader.activity;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +10,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.kartik.newsreader.R;
-import com.kartik.newsreader.api.PublicationInfo;
+import com.kartik.newsreader.adapter.ListviewAdapter;
+import com.kartik.newsreader.data.PublicationInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +32,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
     PublicationInfo publicationInfo;
     ArrayList<PublicationInfo> publicationList = new ArrayList<>();
-    ArrayAdapter adapter;
+    ListviewAdapter adapter;
 
     URL url1;
     HttpURLConnection httpURLConnection;
@@ -42,11 +44,14 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        GetPublication getPublication = new GetPublication();
+        getPublication.execute("https://newsapi.org/v1/sources?language=en");
 
 
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class GetPublication extends AsyncTask<String, Void, String> {
 
 
@@ -104,12 +109,16 @@ public class PublicationSelectionActivity extends AppCompatActivity {
                         publicationInfo.name = sources.getJSONObject(i).getString("name");
                         publicationInfo.url = sources.getJSONObject(i).getString("url");
                         publicationInfo.desc = sources.getJSONObject(i).getString("description");
+                        publicationInfo.category = sources.getJSONObject(i).getString("category");
                         publicationList.add(i, publicationInfo);
                     }
                     Log.i("Array", publicationList.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, 60);
+                listView.setAdapter(adapter);
             }
 
 

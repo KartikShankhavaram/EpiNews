@@ -1,4 +1,4 @@
-package com.kartik.newsreader.api;
+package com.kartik.newsreader.data;
 
 import android.media.Image;
 

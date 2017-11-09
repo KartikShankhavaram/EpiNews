@@ -1,4 +1,4 @@
-package com.kartik.newsreader.api;
+package com.kartik.newsreader.data;
 
 /**
  * Created by kartik on 8/11/17.

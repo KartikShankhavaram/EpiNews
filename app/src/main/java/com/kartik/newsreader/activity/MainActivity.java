@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.NewsAdapter;
-import com.kartik.newsreader.api.NewsInfo;
+import com.kartik.newsreader.data.NewsInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
         findViewById(R.id.splash).setVisibility(View.GONE);
+
+        // For checking listview
+        startActivity(new Intent(this, PublicationSelectionActivity.class));
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

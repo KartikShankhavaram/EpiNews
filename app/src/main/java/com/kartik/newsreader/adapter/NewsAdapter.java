@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.activity.WebViewActivity;
 
-import com.kartik.newsreader.api.NewsInfo;
-import com.kartik.newsreader.api.NewsViewHolder;
+import com.kartik.newsreader.data.NewsInfo;
+import com.kartik.newsreader.viewholder.NewsViewHolder;
 import com.kartik.newsreader.glide.GlideApp;
 
 
