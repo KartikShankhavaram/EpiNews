@@ -12,6 +12,7 @@ import android.widget.Switch;
 
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.data.PublicationInfo;
+import com.kartik.newsreader.service.FontService;
 import com.kartik.newsreader.viewholder.PublicationViewHolder;
 
 import java.util.ArrayList;
@@ -53,6 +54,9 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
             holder.desc = convertView.findViewById(R.id.desc_publ);
             holder.enSwitch = convertView.findViewById(R.id.select_switch);
         }
+
+        holder.title.setTypeface(FontService.getProductSans(convertView.getContext()));
+        holder.desc.setTypeface(FontService.getProductSans(convertView.getContext()));
 
         holder.title.setText(list.get(position).name);
         holder.desc.setText(list.get(position).desc);

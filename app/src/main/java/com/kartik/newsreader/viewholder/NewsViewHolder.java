@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kartik.newsreader.R;
+import com.kartik.newsreader.service.FontService;
 
 /**
  * Created by kartik on 7/11/17.
@@ -26,6 +27,10 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         authorView = v.findViewById(R.id.author);
         visitSite = v.findViewById(R.id.visit_page);
         thumbNail = v.findViewById(R.id.thumbnail);
+
+        titleView.setTypeface(FontService.getProductSans(v.getContext()));
+        authorView.setTypeface(FontService.getProductSans(v.getContext()));
+        visitSite.setTypeface(FontService.getProductSans(v.getContext()));
 
     }
 

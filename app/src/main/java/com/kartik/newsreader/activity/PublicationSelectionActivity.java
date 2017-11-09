@@ -151,7 +151,9 @@ public class PublicationSelectionActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent toMain = new Intent(this, MainActivity.class);
         toMain.putExtra("sourcePref", adapter.getSelectedList());
+        toMain.putExtra("sourceInfo", publicationList);
         startActivity(toMain);
+        Log.i("onBackPressed", "back!");
     }
 
     private void onRefreshAction() {

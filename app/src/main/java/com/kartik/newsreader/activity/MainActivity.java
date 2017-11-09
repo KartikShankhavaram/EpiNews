@@ -3,6 +3,7 @@ package com.kartik.newsreader.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.NewsAdapter;
 import com.kartik.newsreader.data.NewsInfo;
+import com.kartik.newsreader.data.PublicationInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +28,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
+
     NewsAdapter newsAdapter;
     ArrayList<NewsInfo> newsInfoList = new ArrayList<>();
     NewsInfo newsInfo;
@@ -39,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     int currentProgress = 0;
     SharedPreferences sharedPreferences;
+    ArrayList<PublicationInfo> sources;
+    ArrayList pref;
 
     @SuppressLint("StaticFieldLeak")
     public class GetNews extends AsyncTask<String, Integer, String> {
@@ -112,12 +120,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
         findViewById(R.id.splash).setVisibility(View.GONE);
 
+        Intent intentFromSources = getIntent();
+        if(intentFromSources != null) {
+            sources = (ArrayList<PublicationInfo>) intentFromSources.getSerializableExtra("sourceInfo");
+            pref = (ArrayList) intentFromSources.getSerializableExtra("sourcePref");
+        }
 
-
-        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -134,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        //getPublication.execute("https://newsapi.org/v1/sources?language=en");
 
 
     }
