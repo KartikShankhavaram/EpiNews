@@ -115,8 +115,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
         findViewById(R.id.splash).setVisibility(View.GONE);
 
-        // For checking listview
-        startActivity(new Intent(this, PublicationSelectionActivity.class));
+
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -154,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
+
+            case R.id.select_publ:
+                startActivity(new Intent(this, PublicationSelectionActivity.class));
 
             default:
                 return false;

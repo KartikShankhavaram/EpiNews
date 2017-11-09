@@ -5,5 +5,8 @@
         android:title="@string/menu_option_settings"
         android:id="@+id/menu_settings" />
 
+    <item
+        android:title="@string/select_publications"
+        android:id="@+id/select_publ"/>
 
 </menu>

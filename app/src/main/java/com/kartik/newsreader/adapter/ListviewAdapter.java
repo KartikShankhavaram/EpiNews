@@ -17,7 +17,6 @@ import com.kartik.newsreader.viewholder.PublicationViewHolder;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import butterknife.OnClick;
 
 /**
  * Created by kartik on 8/11/17.
@@ -76,4 +75,6 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
     public ArrayList getSelectedList() {
         return selected;
     }
+
+
 }

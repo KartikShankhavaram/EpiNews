@@ -78,4 +78,5 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="cardview_title">PlaceHolder</string>
     <string name="view_story">View Story</string>
+    <string name="select_publications">Select Publications</string>
 </resources>

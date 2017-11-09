@@ -1,7 +1,9 @@
 package com.kartik.newsreader.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.ListviewAdapter;
 import com.kartik.newsreader.data.PublicationInfo;
+import com.kartik.newsreader.service.ConnectionService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,11 +32,11 @@ import butterknife.ButterKnife;
 public class PublicationSelectionActivity extends AppCompatActivity {
 
     @BindView(R.id.listView) ListView listView;
+    @BindView(R.id.swref) SwipeRefreshLayout refreshLayout;
 
     PublicationInfo publicationInfo;
-    ArrayList<PublicationInfo> publicationList = new ArrayList<>();
+    ArrayList<PublicationInfo> publicationList;
     ListviewAdapter adapter;
-
     URL url1;
     HttpURLConnection httpURLConnection;
 
@@ -44,8 +47,23 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        GetPublication getPublication = new GetPublication();
-        getPublication.execute("https://newsapi.org/v1/sources?language=en");
+        if(ConnectionService.getConnectionStatus(this)) {
+            onRefreshAction();
+        } else {
+            Toast.makeText(this, "No internet connection", Toast.LENGTH_SHORT).show();
+        }
+
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(ConnectionService.getConnectionStatus(PublicationSelectionActivity.this)) {
+                    onRefreshAction();
+                } else {
+                    Toast.makeText(PublicationSelectionActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
+                    refreshLayout.setRefreshing(false);
+                }
+            }
+        });
 
 
 
@@ -119,10 +137,30 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
                 adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, publicationList.size());
                 listView.setAdapter(adapter);
+                refreshLayout.setRefreshing(false);
             }
+
+
 
 
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent toMain = new Intent(this, MainActivity.class);
+        toMain.putExtra("sourcePref", adapter.getSelectedList());
+        startActivity(toMain);
+    }
+
+    private void onRefreshAction() {
+        GetPublication g = new GetPublication();
+        publicationList = new ArrayList<>();
+        if(adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+        refreshLayout.setRefreshing(true);
+        g.execute("https://newsapi.org/v1/sources?language=en");
     }
 }
