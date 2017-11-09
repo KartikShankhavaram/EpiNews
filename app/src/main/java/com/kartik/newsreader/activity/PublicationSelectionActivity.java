@@ -117,7 +117,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, 60);
+                adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, publicationList.size());
                 listView.setAdapter(adapter);
             }
 
