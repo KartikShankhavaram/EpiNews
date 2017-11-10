@@ -1,16 +1,24 @@
 package com.kartik.newsreader.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.ListviewAdapter;
 import com.kartik.newsreader.data.PublicationInfo;
@@ -33,19 +41,42 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
     @BindView(R.id.listView) ListView listView;
     @BindView(R.id.swref) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.my_toolbar) Toolbar toolbar;
 
     PublicationInfo publicationInfo;
     ArrayList<PublicationInfo> publicationList;
     ListviewAdapter adapter;
     URL url1;
     HttpURLConnection httpURLConnection;
+    ArrayList<Boolean> preList;
+    SharedPreferences savedList;
+    boolean setSaved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.NoActionBarTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publication_selection);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        savedList = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+
+        Intent a = getIntent();
+        if(a.getIntExtra("status", 0) == 1) {
+            String preListString = savedList.getString("sources_pref", null);
+            if(preListString != null) {
+                preList = new Gson().fromJson(preListString, new TypeToken<ArrayList<Boolean>>(){}.getType());
+            }
+        }
+        if(preList != null) {
+            setSaved = true;
+        }
 
         if(ConnectionService.getConnectionStatus(this)) {
             onRefreshAction();
@@ -136,12 +167,12 @@ public class PublicationSelectionActivity extends AppCompatActivity {
                 }
 
                 adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, publicationList.size());
+                if(setSaved) {
+                    adapter.setSelectedList(preList);
+                }
                 listView.setAdapter(adapter);
                 refreshLayout.setRefreshing(false);
             }
-
-
-
 
         }
 
@@ -149,11 +180,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent toMain = new Intent(this, MainActivity.class);
-        toMain.putExtra("sourcePref", adapter.getSelectedList());
-        toMain.putExtra("sourceInfo", publicationList);
-        startActivity(toMain);
-        Log.i("onBackPressed", "back!");
+        super.onBackPressed();
     }
 
     private void onRefreshAction() {
@@ -164,5 +191,40 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         }
         refreshLayout.setRefreshing(true);
         g.execute("https://newsapi.org/v1/sources?language=en");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.sources_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int ID = item.getItemId();
+
+        switch(ID) {
+            case R.id.sources_menu_settings:
+                startActivity(new Intent(PublicationSelectionActivity.this, SettingsActivity.class));
+                break;
+
+            case R.id.save_sources:
+                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+                String sourceInfo = new Gson().toJson(publicationList);
+                String sourcePref = new Gson().toJson(adapter.getSelectedList());
+                this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE)
+                        .edit()
+                        .putString("sources_list", sourceInfo)
+                        .putString("sources_pref", sourcePref)
+                        .apply();
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+
+            default:
+                return true;
+        }
+
+        return true;
     }
 }

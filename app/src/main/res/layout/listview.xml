@@ -13,7 +13,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:textColor="@color/colorPrimaryText"
+        android:textColor="@color/colorPublListHeading"
         android:textSize="20dp" />
 
     <TextView

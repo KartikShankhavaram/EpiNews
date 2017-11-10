@@ -9,10 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.NewsAdapter;
@@ -34,6 +38,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.my_toolbar) Toolbar toolbar;
 
     NewsAdapter newsAdapter;
     ArrayList<NewsInfo> newsInfoList = new ArrayList<>();
@@ -42,14 +47,13 @@ public class MainActivity extends AppCompatActivity {
     HttpURLConnection urlConnection;
     int index = 0;
     int listSize = 30;
-    ProgressBar progressBar;
     int currentProgress = 0;
     SharedPreferences sharedPreferences;
     ArrayList<PublicationInfo> sources;
     ArrayList pref;
 
     @SuppressLint("StaticFieldLeak")
-    public class GetNews extends AsyncTask<String, Integer, String> {
+    /*public class GetNews extends AsyncTask<String, Integer, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -112,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
             progressBar.setProgress(values[0]);
         }
-    }
+    }*/
 
 
     @Override
@@ -122,13 +126,12 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        findViewById(R.id.loadingPane1).setVisibility(View.VISIBLE);
-        findViewById(R.id.splash).setVisibility(View.GONE);
+        setSupportActionBar(toolbar);
 
         Intent intentFromSources = getIntent();
+
         if(intentFromSources != null) {
-            sources = (ArrayList<PublicationInfo>) intentFromSources.getSerializableExtra("sourceInfo");
-            pref = (ArrayList) intentFromSources.getSerializableExtra("sourcePref");
+
         }
 
         recyclerView.setHasFixedSize(true);
@@ -137,14 +140,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVisibility(View.GONE);
 
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setProgress(0);
-        progressBar.setMax(listSize);
-        progressBar.setIndeterminate(true);
-
         sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-        if(sharedPreferences.getString("pubID", "").equals("")) {
-
+        if(sharedPreferences.getString("sources_pref", null) == null) {
+            Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, PublicationSelectionActivity.class));
         }
 
 
@@ -167,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.select_publ:
-                startActivity(new Intent(this, PublicationSelectionActivity.class));
+                startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 1));
 
             default:
                 return false;

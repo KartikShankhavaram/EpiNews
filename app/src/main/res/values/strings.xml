@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">News Reader</string>
+    <string name="app_name">EpiNews</string>
     <string name="loading_text">Loading news…</string>
     <string name="menu_option_exit">Exit</string>
     <string name="menu_option_settings">Settings</string>
@@ -79,4 +79,6 @@
     <string name="cardview_title">PlaceHolder</string>
     <string name="view_story">View Story</string>
     <string name="select_publications">Select Publications</string>
+    <string name="save_sources">Save</string>
+    <string name="sources_appbar_label">Select News Sources</string>
 </resources>
