@@ -3,6 +3,7 @@ package com.kartik.newsreader.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 v.getContext().startActivity(intent);
             }
         });
+        Log.i("View", holder.toString());
         GlideApp.with(mContext)
                 .load(info.getThumbNailURL())
                 .placeholder(R.drawable.loading_spinner)
@@ -64,5 +66,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     @Override
     public int getItemCount() {
         return newsList.size();
+    }
+
+    public void updateViews(ArrayList<NewsInfo> list) {
+        newsList.clear();
+        newsList.addAll(list);
+        this.notifyDataSetChanged();
     }
 }

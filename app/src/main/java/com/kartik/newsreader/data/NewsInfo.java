@@ -44,4 +44,9 @@ public class NewsInfo {
     public void setThumbNailURL(String thumbNailURL) {
         this.thumbNailURL = thumbNailURL;
     }
+
+    public String toString() {
+        return "\nTitle: " + title + "\nAuthor: " + author + "\nURL: " + url;
+    }
+
 }

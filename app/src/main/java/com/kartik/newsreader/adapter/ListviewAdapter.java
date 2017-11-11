@@ -56,7 +56,7 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
         }
 
         holder.title.setTypeface(FontService.getProductSansBold(convertView.getContext()));
-        holder.desc.setTypeface(FontService.getProductSansItalic(convertView.getContext()));
+        holder.desc.setTypeface(FontService.getProductSans(convertView.getContext()));
 
         holder.title.setText(list.get(position).name);
         holder.desc.setText(list.get(position).desc);
@@ -76,7 +76,7 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
         return convertView;
     }
 
-    public ArrayList getSelectedList() {
+    public ArrayList<Boolean> getSelectedList() {
         return selected;
     }
 

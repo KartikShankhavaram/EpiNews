@@ -32,7 +32,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/thumbnail"
-            android:text="TextView"
+            android:text=""
             android:textColor="@color/colorPrimaryText"
             android:textSize="20sp" />
 
@@ -43,7 +43,7 @@
             android:layout_alignStart="@+id/title"
             android:layout_below="@+id/title"
             android:layout_marginTop="3dp"
-            android:text="TextView" />
+            android:text="" />
 
         <Button
             android:id="@+id/visit_page"

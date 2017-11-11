@@ -28,9 +28,9 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         visitSite = v.findViewById(R.id.visit_page);
         thumbNail = v.findViewById(R.id.thumbnail);
 
-        titleView.setTypeface(FontService.getProductSans(v.getContext()));
-        authorView.setTypeface(FontService.getProductSans(v.getContext()));
-        visitSite.setTypeface(FontService.getProductSans(v.getContext()));
+        //titleView.setTypeface(FontService.getProductSans(v.getContext()));
+        //authorView.setTypeface(FontService.getProductSans(v.getContext()));
+        //visitSite.setTypeface(FontService.getProductSans(v.getContext()));
 
     }
 

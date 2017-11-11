@@ -1,10 +1,12 @@
 package com.kartik.newsreader.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,11 +20,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.adapter.NewsAdapter;
 import com.kartik.newsreader.data.NewsInfo;
 import com.kartik.newsreader.data.PublicationInfo;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,25 +40,26 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.os.AsyncTask.THREAD_POOL_EXECUTOR;
+
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.my_toolbar) Toolbar toolbar;
+    @BindView(R.id.swiperef) SwipeRefreshLayout refreshLayout;
 
     NewsAdapter newsAdapter;
     ArrayList<NewsInfo> newsInfoList = new ArrayList<>();
     NewsInfo newsInfo;
     URL url2;
     HttpURLConnection urlConnection;
-    int index = 0;
-    int listSize = 30;
-    int currentProgress = 0;
+    int counter = 0, asyncCounter = 0;
     SharedPreferences sharedPreferences;
     ArrayList<PublicationInfo> sources;
-    ArrayList pref;
+    ArrayList<Boolean> pref;
 
     @SuppressLint("StaticFieldLeak")
-    /*public class GetNews extends AsyncTask<String, Integer, String> {
+    public class GetNews extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... urls) {
@@ -63,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
                 InputStream in = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
-
-                publishProgress(++currentProgress);
 
                 String result = "";
                 int data = reader.read();
@@ -91,32 +95,32 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
 
             try {
-                newsInfo = new NewsInfo();
-                JSONObject newsJSON = new JSONObject(s);
-                newsInfo.setTitle(newsJSON.getString("title"));
-                newsInfo.setUrl(newsJSON.getString("url"));
-                newsInfo.setAuthor(newsJSON.getString("by"));
-
+                int i;
+                JSONObject news = new JSONObject(s);
+                JSONArray newsArray = news.getJSONArray("articles");
+                for(i = 0; i < newsArray.length(); i++) {
+                    newsInfo = new NewsInfo();
+                    newsInfo.setAuthor(newsArray.getJSONObject(i).getString("author"));
+                    newsInfo.setTitle(newsArray.getJSONObject(i).getString("title"));
+                    newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
+                    newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
+                    Log.i("newsInfo", newsInfo.toString());
+                    newsInfoList.add(newsInfo);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            newsInfoList.add(index, newsInfo);
-            index++;
-            if(newsInfoList != null && newsInfoList.size() == listSize) {
-                findViewById(R.id.loadingPane1).setVisibility(View.GONE);
-                newsAdapter = new NewsAdapter(newsInfoList, getApplicationContext());
+            asyncCounter++;
+            if(asyncCounter == counter) {
+                newsAdapter = new NewsAdapter(newsInfoList, MainActivity.this);
                 recyclerView.setAdapter(newsAdapter);
-                findViewById(R.id.recycler_view).setVisibility(View.VISIBLE);
+                Log.i("Adapter", "Set!");
+                refreshLayout.setRefreshing(false);
             }
 
         }
 
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-            progressBar.setProgress(values[0]);
-        }
-    }*/
+    }
 
 
     @Override
@@ -128,26 +132,46 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        Intent intentFromSources = getIntent();
-
-        if(intentFromSources != null) {
-
-        }
-
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setVisibility(View.GONE);
 
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadNews();
+                refreshLayout.setRefreshing(true);
+            }
+        });
+
         sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-        if(sharedPreferences.getString("sources_pref", null) == null) {
+        String sourcesPrefJson = sharedPreferences.getString("sources_pref", null);
+        String sourcesListJson = sharedPreferences.getString("sources_list", null);
+        if(sourcesPrefJson == null) {
             Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, PublicationSelectionActivity.class));
+            startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0));
         }
 
+        pref = new Gson().fromJson(sourcesPrefJson, new TypeToken<ArrayList<Boolean>>(){}.getType());
+        sources = new Gson().fromJson(sourcesListJson, new TypeToken<ArrayList<PublicationInfo>>(){}.getType());
+
+        loadNews();
 
 
+    }
+
+    private void loadNews() {
+        int i;
+        refreshLayout.setRefreshing(true);
+        for(i = 0; i < pref.size(); i++) {
+            if(pref.get(i)) {
+                new GetNews()
+                        .executeOnExecutor(THREAD_POOL_EXECUTOR, "https://newsapi.org/v1/articles?source=" + sources.get(i).id + "&apiKey=" + getString(R.string.api_key));
+                counter++;
+            }
+        }
     }
 
     @Override

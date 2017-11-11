@@ -2,11 +2,13 @@ package com.kartik.newsreader.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -51,6 +53,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
     ArrayList<Boolean> preList;
     SharedPreferences savedList;
     boolean setSaved = false;
+    boolean overrideBack = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,8 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
+        listView.setDividerHeight(0);
+
         savedList = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
 
         Intent a = getIntent();
@@ -76,6 +81,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         }
         if(preList != null) {
             setSaved = true;
+            Log.i("OldList", preList.toString());
         }
 
         if(ConnectionService.getConnectionStatus(this)) {
@@ -161,7 +167,6 @@ public class PublicationSelectionActivity extends AppCompatActivity {
                         publicationInfo.category = sources.getJSONObject(i).getString("category");
                         publicationList.add(i, publicationInfo);
                     }
-                    Log.i("Array", publicationList.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -180,7 +185,31 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        boolean a;
+        if((a = equalArrayLists(adapter.getSelectedList(), preList)) || overrideBack) {
+            overrideBack = false;
+            Log.i("Equal", a?"true":"false");
+            Log.i("NewList", adapter.getSelectedList().toString());
+            Log.i("OldList", preList.toString());
+            super.onBackPressed();
+        }
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage(R.string.save_dialog_message)
+                .setPositiveButton(R.string.save_dialog_positive, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        savePreferences(PublicationSelectionActivity.this);
+                    }
+                })
+                .setNegativeButton(R.string.save_dialog_negative, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        overrideBack = true;
+                        PublicationSelectionActivity.this.onBackPressed();
+                    }
+                });
+        dialog.create();
+
     }
 
     private void onRefreshAction() {
@@ -207,24 +236,44 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         switch(ID) {
             case R.id.sources_menu_settings:
                 startActivity(new Intent(PublicationSelectionActivity.this, SettingsActivity.class));
-                break;
+                return true;
 
             case R.id.save_sources:
-                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
-                String sourceInfo = new Gson().toJson(publicationList);
-                String sourcePref = new Gson().toJson(adapter.getSelectedList());
-                this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE)
-                        .edit()
-                        .putString("sources_list", sourceInfo)
-                        .putString("sources_pref", sourcePref)
-                        .apply();
-                startActivity(new Intent(this, MainActivity.class));
-                break;
+                savePreferences(this);
+                return true;
 
             default:
-                return true;
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return true;
+    public void savePreferences(Context mContext) {
+        Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
+        String sourceInfo = new Gson().toJson(publicationList);
+        String sourcePref = new Gson().toJson(adapter.getSelectedList());
+        mContext.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE)
+                .edit()
+                .putString("sources_list", sourceInfo)
+                .putString("sources_pref", sourcePref)
+                .apply();
+        startActivity(new Intent(mContext, MainActivity.class));
+    }
+
+    public boolean equalArrayLists(ArrayList<Boolean> list1, ArrayList<Boolean> list2)
+    {
+        //null checking
+        if(list1==null && list2==null)
+            return true;
+        if((list1 == null && list2 != null) || (list1 != null && list2 == null))
+            return false;
+
+        int i;
+        for(i = 0; i < list1.size(); i++)
+        {
+            if(list1.get(i) != list2.get(i)) {
+                break;
+            }
+        }
+        return i == list1.size();
     }
 }
