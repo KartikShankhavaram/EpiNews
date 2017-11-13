@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +38,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     ArrayList<PublicationInfo> sources;
     ArrayList<Boolean> pref;
+    Point size;
 
     @SuppressLint("StaticFieldLeak")
     public class GetNews extends AsyncTask<String, Void, String> {
@@ -105,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
                     newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
                     newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
                     newsInfo.setDesc(newsArray.getJSONObject(i).getString("description"));
+                    if(newsArray.getJSONObject(i).getString("description").equals("null")) {
+                        continue;
+                    }
                     Log.i("newsInfo", newsInfo.toString());
                     newsInfoList.add(newsInfo);
                 }
@@ -113,7 +121,8 @@ public class MainActivity extends AppCompatActivity {
             }
             asyncCounter++;
             if(asyncCounter == counter) {
-                newsAdapter = new NewsAdapter(newsInfoList, MainActivity.this);
+                Collections.shuffle(newsInfoList);
+                newsAdapter = new NewsAdapter(newsInfoList, MainActivity.this, size);
                 recyclerView.setAdapter(newsAdapter);
                 Log.i("Adapter", "Set!");
                 refreshLayout.setRefreshing(false);
@@ -133,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        Display display = getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
+
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -151,13 +164,23 @@ public class MainActivity extends AppCompatActivity {
         String sourcesListJson = sharedPreferences.getString("sources_list", null);
         if(sourcesPrefJson == null) {
             Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0));
+            startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+        } else {
+
+            pref = new Gson().fromJson(sourcesPrefJson, new TypeToken<ArrayList<Boolean>>() {
+            }.getType());
+            sources = new Gson().fromJson(sourcesListJson, new TypeToken<ArrayList<PublicationInfo>>() {
+            }.getType());
+
+            if (pref == null) {
+                Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+                finish();
+            } else {
+                loadNews();
+            }
         }
 
-        pref = new Gson().fromJson(sourcesPrefJson, new TypeToken<ArrayList<Boolean>>(){}.getType());
-        sources = new Gson().fromJson(sourcesListJson, new TypeToken<ArrayList<PublicationInfo>>(){}.getType());
-
-        loadNews();
 
 
     }

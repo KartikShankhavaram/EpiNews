@@ -20,6 +20,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     private TextView titleView;
     private TextView authorView;
     private RelativeLayout relativeLayout;
+    private ImageView image;
     private TextView desc;
 
     public NewsViewHolder(View v) {
@@ -29,10 +30,11 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         authorView = v.findViewById(R.id.author);
         relativeLayout = v.findViewById(R.id.card_relative_layout);
         desc = v.findViewById(R.id.description);
+        image = v.findViewById(R.id.imageView);
 
-        //titleView.setTypeface(FontService.getProductSans(v.getContext()));
-        //authorView.setTypeface(FontService.getProductSans(v.getContext()));
-        //visitSite.setTypeface(FontService.getProductSans(v.getContext()));
+        titleView.setTypeface(FontService.getProductSans(v.getContext()));
+        authorView.setTypeface(FontService.getProductSans(v.getContext()));
+        desc.setTypeface(FontService.getProductSans(v.getContext()));
 
     }
 
@@ -50,5 +52,9 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
     public TextView getDesc() {
         return desc;
+    }
+
+    public ImageView getImage() {
+        return image;
     }
 }

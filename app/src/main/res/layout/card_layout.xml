@@ -18,7 +18,17 @@
         android:id="@+id/card_relative_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground">
+        android:background="@color/colorBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            card_view:srcCompat="@drawable/newspaper"
+            android:layout_margin="5dp"/>
 
         <TextView
             android:id="@+id/title"
@@ -26,10 +36,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="5dp"
             android:text=""
             android:textColor="@color/colorPrimaryText"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_below="@id/imageView"/>
 
         <TextView
             android:id="@+id/author"
@@ -48,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/author"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="25dp" />

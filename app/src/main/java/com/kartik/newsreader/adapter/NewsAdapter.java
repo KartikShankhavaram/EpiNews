@@ -2,6 +2,7 @@ package com.kartik.newsreader.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -32,10 +33,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     public ArrayList<NewsInfo> newsList;
     public Context mContext;
+    Point displaySize;
 
-    public NewsAdapter(ArrayList<NewsInfo> newsList, Context mContext) {
+    public NewsAdapter(ArrayList<NewsInfo> newsList, Context mContext, Point displaySize) {
         this.newsList = newsList;
         this.mContext = mContext;
+        this.displaySize = displaySize;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     public void onBindViewHolder(final NewsViewHolder holder, int position) {
         final NewsInfo info = newsList.get(position);
         Log.i("data", info.toString());
-        holder.getAuthorView().setText(NewsInfo.AUTHOR_PREFIX + info.getAuthor());
+        holder.getAuthorView().setText(info.getAuthor().equals("null") || info.getAuthor().equals("")?"":NewsInfo.AUTHOR_PREFIX + info.getAuthor());
         holder.getTitleView().setText(info.getTitle());
         holder.getDesc().setText(info.getDesc());
         holder.getRelativeLayout().setOnClickListener(new View.OnClickListener() {
@@ -64,66 +67,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         });
         Log.i("View", holder.toString());
         GlideApp.with(mContext)
-                .load(info.getThumbNailURL())
-                .into(new Target<Drawable>() {
-
-                    @Override
-                    public void onLoadStarted(@Nullable Drawable placeholder) {
-                        Log.i("started Loading", "Yes");
-                    }
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-                        holder.getRelativeLayout().setBackground(errorDrawable);
-                    }
-
-                    @Override
-                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
-                        holder.getRelativeLayout().setBackground(resource);
-                        Log.i("Loaded image", "Yes!");
-                    }
-
-                    @Override
-                    public void onLoadCleared(@Nullable Drawable placeholder) {
-
-                    }
-
-                    @Override
-                    public void getSize(SizeReadyCallback cb) {
-
-                    }
-
-                    @Override
-                    public void removeCallback(SizeReadyCallback cb) {
-
-                    }
-
-                    @Override
-                    public void setRequest(@Nullable Request request) {
-
-                    }
-
-                    @Nullable
-                    @Override
-                    public Request getRequest() {
-                        return null;
-                    }
-
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onStop() {
-
-                    }
-
-                    @Override
-                    public void onDestroy() {
-
-                    }
-                });
+                .asBitmap()
+                .placeholder(R.drawable.loading_spinner)
+                .load(info.getThumbNailURL().equals("null")?R.drawable.newspaper:info.getThumbNailURL())
+                .into(holder.getImage());
+                // TODO Get dimensions of image
         Log.i("View", holder.toString());
 
     }
