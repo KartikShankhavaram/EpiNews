@@ -11,6 +11,7 @@ public class NewsInfo {
     private String author;
     private String url;
     private String thumbNailURL;
+    private String desc;
     public static final String AUTHOR_PREFIX = "by ";
 
     public String getTitle() {
@@ -45,8 +46,16 @@ public class NewsInfo {
         this.thumbNailURL = thumbNailURL;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
     public String toString() {
-        return "\nTitle: " + title + "\nAuthor: " + author + "\nURL: " + url;
+        return "\nTitle: " + title + "\nAuthor: " + author + "\nURL: " + url + "\nDescription: " + desc;
     }
 
 }

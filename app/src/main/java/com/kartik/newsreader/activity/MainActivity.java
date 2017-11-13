@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     newsInfo.setTitle(newsArray.getJSONObject(i).getString("title"));
                     newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
                     newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
+                    newsInfo.setDesc(newsArray.getJSONObject(i).getString("description"));
                     Log.i("newsInfo", newsInfo.toString());
                     newsInfoList.add(newsInfo);
                 }
@@ -136,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setVisibility(View.GONE);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

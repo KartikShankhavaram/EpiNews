@@ -1,9 +1,11 @@
 package com.kartik.newsreader.viewholder;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kartik.newsreader.R;
@@ -17,16 +19,16 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
     private TextView titleView;
     private TextView authorView;
-    private Button visitSite;
-    private ImageView thumbNail;
+    private RelativeLayout relativeLayout;
+    private TextView desc;
 
     public NewsViewHolder(View v) {
         super(v);
 
         titleView = v.findViewById(R.id.title);
         authorView = v.findViewById(R.id.author);
-        visitSite = v.findViewById(R.id.visit_page);
-        thumbNail = v.findViewById(R.id.thumbnail);
+        relativeLayout = v.findViewById(R.id.card_relative_layout);
+        desc = v.findViewById(R.id.description);
 
         //titleView.setTypeface(FontService.getProductSans(v.getContext()));
         //authorView.setTypeface(FontService.getProductSans(v.getContext()));
@@ -42,12 +44,11 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         return authorView;
     }
 
-    public Button getVisitSite() {
-        return visitSite;
+    public RelativeLayout getRelativeLayout() {
+        return relativeLayout;
     }
 
-    public ImageView getThumbNail() {
-        return thumbNail;
+    public TextView getDesc() {
+        return desc;
     }
-
 }
