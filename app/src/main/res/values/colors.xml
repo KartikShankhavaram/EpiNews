@@ -11,4 +11,5 @@
     <color name="colorShadow">#222222</color>
     <color name="colorBackground">#FFFEEE</color>
     <color name="colorPublListHeading">#444</color>
+    <color name="title_color">#FFFFFF</color>
 </resources>

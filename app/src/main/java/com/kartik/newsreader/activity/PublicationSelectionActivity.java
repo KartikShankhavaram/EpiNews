@@ -35,6 +35,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,8 +51,8 @@ public class PublicationSelectionActivity extends AppCompatActivity {
     ListviewAdapter adapter;
     URL url1;
     HttpURLConnection httpURLConnection;
-    ArrayList<Boolean> preList;
-    SharedPreferences savedList;
+    HashMap<String, Boolean> savedPref;
+    SharedPreferences saved;
     boolean setSaved = false;
     boolean overrideBack = false;
 
@@ -64,24 +65,27 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.title_color));
 
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
 
         listView.setDividerHeight(0);
 
-        savedList = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        saved = this.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+
+        overrideBack = false;
 
         Intent a = getIntent();
         if(a.getIntExtra("status", 0) == 1) {
-            String preListString = savedList.getString("sources_pref", null);
+            String preListString = saved.getString("sources_pref", null);
             if(preListString != null) {
-                preList = new Gson().fromJson(preListString, new TypeToken<ArrayList<Boolean>>(){}.getType());
+                savedPref = new Gson().fromJson(preListString, new TypeToken<HashMap<String, Boolean>>(){}.getType());
             }
         }
-        if(preList != null) {
+        if(savedPref != null) {
             setSaved = true;
-            Log.i("OldList", preList.toString());
+            Log.i("OldList", savedPref.toString());
         }
 
         if(ConnectionService.getConnectionStatus(this)) {
@@ -173,7 +177,13 @@ public class PublicationSelectionActivity extends AppCompatActivity {
 
                 adapter = new ListviewAdapter(PublicationSelectionActivity.this, R.layout.listview, publicationList, publicationList.size());
                 if(setSaved) {
-                    adapter.setSelectedList(preList);
+                    adapter.setPreferences(savedPref);
+                } else {
+                    HashMap<String, Boolean> temp = new HashMap<>();
+                    for(PublicationInfo p: publicationList) {
+                        temp.put(p.id, false);
+                    }
+                    adapter.setPreferences(temp);
                 }
                 listView.setAdapter(adapter);
                 refreshLayout.setRefreshing(false);
@@ -186,29 +196,35 @@ public class PublicationSelectionActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         boolean a;
-        if((a = equalArrayLists(adapter.getSelectedList(), preList)) || overrideBack) {
+        /*if((a = equalArrayLists(adapter.getSelectedList(), preList)) || overrideBack) {
             overrideBack = false;
-            Log.i("Equal", a?"true":"false");
+            //Log.i("Equal", a?"true":"false");
             Log.i("NewList", adapter.getSelectedList().toString());
             Log.i("OldList", preList.toString());
             super.onBackPressed();
+        }*/
+        if(!overrideBack) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(PublicationSelectionActivity.this);
+            dialog.setMessage(R.string.save_dialog_message)
+                    .setPositiveButton(R.string.save_dialog_positive, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            savePreferences(PublicationSelectionActivity.this);
+                        }
+                    })
+                    .setNegativeButton(R.string.save_dialog_negative, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            overrideBack = true;
+                            PublicationSelectionActivity.this.onBackPressed();
+                        }
+                    })
+                    .setCancelable(false);
+            Log.i("Dialog", "Created!");
+            dialog.create().show();
+        } else {
+            super.onBackPressed();
         }
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage(R.string.save_dialog_message)
-                .setPositiveButton(R.string.save_dialog_positive, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        savePreferences(PublicationSelectionActivity.this);
-                    }
-                })
-                .setNegativeButton(R.string.save_dialog_negative, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        overrideBack = true;
-                        PublicationSelectionActivity.this.onBackPressed();
-                    }
-                });
-        dialog.create();
 
     }
 
@@ -250,7 +266,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
     public void savePreferences(Context mContext) {
         Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
         String sourceInfo = new Gson().toJson(publicationList);
-        String sourcePref = new Gson().toJson(adapter.getSelectedList());
+        String sourcePref = new Gson().toJson(adapter.getPreferences());
         mContext.getSharedPreferences(getPackageName(), Context.MODE_PRIVATE)
                 .edit()
                 .putString("sources_list", sourceInfo)
@@ -259,21 +275,5 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         startActivity(new Intent(mContext, MainActivity.class));
     }
 
-    public boolean equalArrayLists(ArrayList<Boolean> list1, ArrayList<Boolean> list2)
-    {
-        //null checking
-        if(list1==null && list2==null)
-            return true;
-        if((list1 == null && list2 != null) || (list1 != null && list2 == null))
-            return false;
 
-        int i;
-        for(i = 0; i < list1.size(); i++)
-        {
-            if(list1.get(i) != list2.get(i)) {
-                break;
-            }
-        }
-        return i == list1.size();
-    }
 }

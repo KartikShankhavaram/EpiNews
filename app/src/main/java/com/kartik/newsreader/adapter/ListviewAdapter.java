@@ -3,7 +3,6 @@ package com.kartik.newsreader.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,24 +15,24 @@ import com.kartik.newsreader.service.FontService;
 import com.kartik.newsreader.viewholder.PublicationViewHolder;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 
 
 /**
- * Created by kartik on 8/11/17.
+ * Created by kartik on Fri, 8/11/17
  */
 
 public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
 
-    ArrayList<PublicationInfo> list;
-    LayoutInflater inflater;
-    ArrayList<Boolean> selected;
+    private ArrayList<PublicationInfo> list;
+    private LayoutInflater inflater;
+    private HashMap<String, Boolean> pref;
 
     public ListviewAdapter(@NonNull Context context, int resource, @NonNull ArrayList<PublicationInfo> objects, int size) {
         super(context, resource, objects);
         list = objects;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        selected = new ArrayList<>(Collections.nCopies(size, false));
+        pref = new HashMap<>();
     }
 
     @NonNull
@@ -60,7 +59,7 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
 
         holder.title.setText(list.get(position).name);
         holder.desc.setText(list.get(position).desc);
-        holder.enSwitch.setChecked(selected.get(position));
+        holder.enSwitch.setChecked((pref.containsKey(list.get(position).id))?pref.get(list.get(position).id):false);
         holder.enSwitch.setTag(position);
 
         holder.enSwitch.setOnClickListener(new View.OnClickListener() {
@@ -68,20 +67,20 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
             public void onClick(View v) {
                 Switch s = (Switch) v;
                 int p = (int) s.getTag();
-                selected.set(p, !selected.get(p));
-                Log.i("Selected", selected.toString());
+                String key = list.get(p).id;
+                pref.put(key, !pref.get(key));
             }
         });
 
         return convertView;
     }
 
-    public ArrayList<Boolean> getSelectedList() {
-        return selected;
+    public HashMap<String, Boolean> getPreferences() {
+        return pref;
     }
 
-    public void setSelectedList(ArrayList<Boolean> selected) {
-        this.selected = selected;
+    public void setPreferences(HashMap<String, Boolean> pref) {
+        this.pref = (pref == null)?new HashMap<String, Boolean>():pref;
     }
 
 

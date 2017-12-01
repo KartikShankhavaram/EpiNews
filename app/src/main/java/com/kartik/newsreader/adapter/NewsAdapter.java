@@ -55,6 +55,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         final NewsInfo info = newsList.get(position);
         Log.i("data", info.toString());
         holder.getAuthorView().setText(info.getAuthor().equals("null") || info.getAuthor().equals("")?"":NewsInfo.AUTHOR_PREFIX + info.getAuthor());
+        holder.getAuthorView().setVisibility(info.getAuthor().equals("null") || info.getAuthor().equals("")?View.GONE:View.VISIBLE);
         holder.getTitleView().setText(info.getTitle());
         holder.getDesc().setText(info.getDesc());
         holder.getRelativeLayout().setOnClickListener(new View.OnClickListener() {

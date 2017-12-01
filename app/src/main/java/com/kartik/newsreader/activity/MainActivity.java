@@ -40,6 +40,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     int counter = 0, asyncCounter = 0;
     SharedPreferences sharedPreferences;
     ArrayList<PublicationInfo> sources;
-    ArrayList<Boolean> pref;
+    HashMap<String, Boolean> pref;
     Point size;
 
     @SuppressLint("StaticFieldLeak")
@@ -164,20 +165,21 @@ public class MainActivity extends AppCompatActivity {
         String sourcesListJson = sharedPreferences.getString("sources_list", null);
         if(sourcesPrefJson == null) {
             Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
+            startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            MainActivity.this.finish();
         } else {
 
-            pref = new Gson().fromJson(sourcesPrefJson, new TypeToken<ArrayList<Boolean>>() {
+            pref = new Gson().fromJson(sourcesPrefJson, new TypeToken<HashMap<String, Boolean>>() {
             }.getType());
             sources = new Gson().fromJson(sourcesListJson, new TypeToken<ArrayList<PublicationInfo>>() {
             }.getType());
 
-            if (pref == null) {
-                Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY));
-                finish();
-            } else {
+            if(pref != null) {
                 loadNews();
+            } else {
+                Toast.makeText(getApplicationContext(), "Please select atleast 1 news source", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, PublicationSelectionActivity.class).putExtra("status", 0).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                MainActivity.this.finish();
             }
         }
 
@@ -187,9 +189,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadNews() {
         int i;
+        String sourcesId;
         refreshLayout.setRefreshing(true);
         for(i = 0; i < pref.size(); i++) {
-            if(pref.get(i)) {
+            sourcesId = sources.get(i).id;
+            if(pref.get(sourcesId)) {
                 new GetNews()
                         .executeOnExecutor(THREAD_POOL_EXECUTOR, "https://newsapi.org/v1/articles?source=" + sources.get(i).id + "&apiKey=" + getString(R.string.api_key));
                 counter++;
