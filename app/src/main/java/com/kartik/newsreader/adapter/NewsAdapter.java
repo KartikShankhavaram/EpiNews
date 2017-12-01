@@ -2,16 +2,23 @@ package com.kartik.newsreader.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 
 import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
@@ -34,6 +41,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     public ArrayList<NewsInfo> newsList;
     public Context mContext;
     Point displaySize;
+    Size size;
+    boolean hasSize = false;
 
     public NewsAdapter(ArrayList<NewsInfo> newsList, Context mContext, Point displaySize) {
         this.newsList = newsList;
@@ -51,11 +60,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final NewsViewHolder holder, int position) {
+    public void onBindViewHolder(final NewsViewHolder holder, final int position) {
         final NewsInfo info = newsList.get(position);
         Log.i("data", info.toString());
-        holder.getAuthorView().setText(info.getAuthor().equals("null") || info.getAuthor().equals("")?"":NewsInfo.AUTHOR_PREFIX + info.getAuthor());
-        holder.getAuthorView().setVisibility(info.getAuthor().equals("null") || info.getAuthor().equals("")?View.GONE:View.VISIBLE);
+        holder.getAuthorView().setText(NewsInfo.AUTHOR_PREFIX + info.getAuthor());
+        holder.getAuthorView().setVisibility(info.getAuthor().equals("null") || info.getAuthor().equals("") || info.getAuthor().startsWith("http")?View.GONE:View.VISIBLE);
         holder.getTitleView().setText(info.getTitle());
         holder.getDesc().setText(info.getDesc());
         holder.getRelativeLayout().setOnClickListener(new View.OnClickListener() {
@@ -67,12 +76,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
             }
         });
         Log.i("View", holder.toString());
-        GlideApp.with(mContext)
-                .asBitmap()
-                .placeholder(R.drawable.loading_spinner)
-                .load(info.getThumbNailURL().equals("null")?R.drawable.newspaper:info.getThumbNailURL())
-                .into(holder.getImage());
-                // TODO Get dimensions of image
+        if(!hasSize) {
+            ViewTreeObserver observer = holder.getCardView().getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    holder.getCardView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    size = new Size(holder.getRelativeLayout().getMeasuredWidth(), holder.getCardView().getMeasuredHeight());
+                    Log.i("Image", "Loading!");
+                    loadImage(holder, position);
+                    hasSize = true;
+                }
+            });
+        } else {
+            loadImage(holder, position);
+        }
         Log.i("View", holder.toString());
 
     }
@@ -86,5 +104,30 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         newsList.clear();
         newsList.addAll(list);
         this.notifyDataSetChanged();
+    }
+
+    private void loadImage(final NewsViewHolder holder, int position) {
+        final NewsInfo info = newsList.get(position);
+        GlideApp.with(mContext)
+                .asBitmap()
+                .placeholder(R.drawable.loading_spinner)
+                .error(R.drawable.newspaper)
+                .centerCrop()
+                .load(info.getThumbNailURL().equals("null")?R.drawable.newspaper:info.getThumbNailURL())
+                .into(new SimpleTarget<Bitmap>(size.getWidth(), size.getHeight()) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                        if(resource.getWidth() > size.getWidth()) {
+                            resource.setWidth(size.getWidth());
+                        }
+                        if(resource.getHeight() > size.getHeight()) {
+                            resource.setHeight(size.getHeight());
+                        }
+                        Drawable d = new BitmapDrawable(mContext.getResources(), resource);
+                        d.setAlpha(70);
+                        holder.getRelativeLayout().setBackground(d);
+                        Log.i(info.getTitle(), "Image loaded!");
+                    }
+                });
     }
 }

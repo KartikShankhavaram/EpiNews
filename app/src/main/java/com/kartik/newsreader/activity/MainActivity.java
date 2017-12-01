@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.function.Predicate;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,33 +101,41 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
 
-            try {
-                int i;
-                JSONObject news = new JSONObject(s);
-                JSONArray newsArray = news.getJSONArray("articles");
-                for(i = 0; i < newsArray.length(); i++) {
-                    newsInfo = new NewsInfo();
-                    newsInfo.setAuthor(newsArray.getJSONObject(i).getString("author"));
-                    newsInfo.setTitle(newsArray.getJSONObject(i).getString("title"));
-                    newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
-                    newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
-                    newsInfo.setDesc(newsArray.getJSONObject(i).getString("description"));
-                    if(newsArray.getJSONObject(i).getString("description").equals("null")) {
-                        continue;
+            if (s == null) {
+                Toast.makeText(MainActivity.this, "Couldn't fetch news", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    int i;
+                    JSONObject news = new JSONObject(s);
+                    JSONArray newsArray = news.getJSONArray("articles");
+                    for (i = 0; i < newsArray.length(); i++) {
+                        newsInfo = new NewsInfo();
+                        newsInfo.setAuthor(newsArray.getJSONObject(i).getString("author"));
+                        newsInfo.setTitle(newsArray.getJSONObject(i).getString("title"));
+                        if(hasTitle(newsArray.getJSONObject(i).getString("title"))) {
+                            continue;
+                        }
+                        newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
+                        newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
+                        newsInfo.setDesc(newsArray.getJSONObject(i).getString("description"));
+                        if (newsArray.getJSONObject(i).getString("description").equals("null")) {
+                            continue;
+                        }
+                        Log.i("newsInfo", newsInfo.toString());
+                        newsInfoList.add(newsInfo);
                     }
-                    Log.i("newsInfo", newsInfo.toString());
-                    newsInfoList.add(newsInfo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            asyncCounter++;
-            if(asyncCounter == counter) {
-                Collections.shuffle(newsInfoList);
-                newsAdapter = new NewsAdapter(newsInfoList, MainActivity.this, size);
-                recyclerView.setAdapter(newsAdapter);
-                Log.i("Adapter", "Set!");
-                refreshLayout.setRefreshing(false);
+                asyncCounter++;
+                if (asyncCounter == counter) {
+                    Collections.shuffle(newsInfoList);
+                    newsAdapter = new NewsAdapter(newsInfoList, MainActivity.this, size);
+                    recyclerView.setAdapter(newsAdapter);
+                    Log.i("Adapter", "Set!");
+                    refreshLayout.setRefreshing(false);
+                }
+
             }
 
         }
@@ -152,12 +161,9 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadNews();
-                refreshLayout.setRefreshing(true);
-            }
+        refreshLayout.setOnRefreshListener(() -> {
+            loadNews();
+            refreshLayout.setRefreshing(true);
         });
 
         sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
@@ -201,6 +207,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean hasTitle(final String title) {
+        for(NewsInfo info: newsInfoList) {
+            if(info.getTitle().contains(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -224,4 +239,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
 }

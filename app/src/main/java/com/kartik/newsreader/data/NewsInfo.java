@@ -57,5 +57,4 @@ public class NewsInfo {
     public String toString() {
         return "\nTitle: " + title + "\nAuthor: " + author + "\nURL: " + url + "\nDescription: " + desc + "\nImageURL: " + thumbNailURL;
     }
-
 }
