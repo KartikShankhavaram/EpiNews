@@ -20,8 +20,8 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     private TextView titleView;
     private TextView authorView;
     private RelativeLayout relativeLayout;
-    private ImageView image;
     private TextView desc;
+    private CardView cardView;
 
     public NewsViewHolder(View v) {
         super(v);
@@ -30,12 +30,15 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         authorView = v.findViewById(R.id.author);
         relativeLayout = v.findViewById(R.id.card_relative_layout);
         desc = v.findViewById(R.id.description);
-        image = v.findViewById(R.id.imageView);
+        cardView = v.findViewById(R.id.card_view);
 
         titleView.setTypeface(FontService.getProductSans(v.getContext()));
         authorView.setTypeface(FontService.getProductSans(v.getContext()));
         desc.setTypeface(FontService.getProductSans(v.getContext()));
 
+        titleView.setBackgroundResource(R.color.trans);
+        authorView.setBackgroundResource(R.color.trans);
+        desc.setBackgroundResource(R.color.trans);
     }
 
     public TextView getTitleView() {
@@ -54,7 +57,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         return desc;
     }
 
-    public ImageView getImage() {
-        return image;
+    public CardView getCardView() {
+        return cardView;
     }
 }
