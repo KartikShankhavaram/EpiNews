@@ -45,6 +45,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="50dp"
+            android:layout_marginStart="5dp"
             android:text=""
             android:textColor="@color/colorText"
             android:textSize="20sp" />
@@ -56,6 +57,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="20dp"
+            android:layout_marginStart="5dp"
             android:textColor="@color/colorText"
             android:text="" />
 
