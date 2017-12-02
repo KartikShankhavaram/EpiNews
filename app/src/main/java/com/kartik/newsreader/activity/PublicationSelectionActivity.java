@@ -206,18 +206,10 @@ public class PublicationSelectionActivity extends AppCompatActivity {
         if(!overrideBack) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(PublicationSelectionActivity.this);
             dialog.setMessage(R.string.save_dialog_message)
-                    .setPositiveButton(R.string.save_dialog_positive, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            savePreferences(PublicationSelectionActivity.this);
-                        }
-                    })
-                    .setNegativeButton(R.string.save_dialog_negative, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            overrideBack = true;
-                            PublicationSelectionActivity.this.onBackPressed();
-                        }
+                    .setPositiveButton(R.string.save_dialog_positive, (dialog12, which) -> savePreferences(PublicationSelectionActivity.this))
+                    .setNegativeButton(R.string.save_dialog_negative, (dialog1, which) -> {
+                        overrideBack = true;
+                        PublicationSelectionActivity.this.onBackPressed();
                     })
                     .setCancelable(false);
             Log.i("Dialog", "Created!");
@@ -235,7 +227,7 @@ public class PublicationSelectionActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
         refreshLayout.setRefreshing(true);
-        g.execute("https://newsapi.org/v1/sources?language=en");
+        g.execute("https://newsapi.org/v2/sources?apiKey=1d2c2b6508b14be1aa8fce354f2a5b7c&language=en");
     }
 
     @Override

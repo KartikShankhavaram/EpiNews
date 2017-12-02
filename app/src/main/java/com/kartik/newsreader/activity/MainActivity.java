@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 int data = reader.read();
                 char current;
 
+                Log.i("Getting", "true");
+
                 while(data != -1) {
 
                     current = (char) data;
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     data = reader.read();
 
                 }
+                Log.i("JSON", result);
                 return result;
 
 
@@ -108,17 +111,20 @@ public class MainActivity extends AppCompatActivity {
                     int i;
                     JSONObject news = new JSONObject(s);
                     JSONArray newsArray = news.getJSONArray("articles");
+                    Log.i("Decoding", "Now!");
                     for (i = 0; i < newsArray.length(); i++) {
                         newsInfo = new NewsInfo();
-                        newsInfo.setAuthor(newsArray.getJSONObject(i).getString("author"));
-                        newsInfo.setTitle(newsArray.getJSONObject(i).getString("title"));
-                        if(hasTitle(newsArray.getJSONObject(i).getString("title"))) {
+                        final JSONObject newsObject = newsArray.getJSONObject(i);
+                        newsInfo.setAuthor(newsObject.getString("author"));
+                        newsInfo.setTitle(newsObject.getString("title"));
+                        if(hasTitle(newsObject.getString("title"))) {
                             continue;
                         }
-                        newsInfo.setUrl(newsArray.getJSONObject(i).getString("url"));
-                        newsInfo.setThumbNailURL(newsArray.getJSONObject(i).getString("urlToImage"));
-                        newsInfo.setDesc(newsArray.getJSONObject(i).getString("description"));
-                        if (newsArray.getJSONObject(i).getString("description").equals("null")) {
+                        newsInfo.setSource(newsObject.getJSONObject("source").getString("name"));
+                        newsInfo.setUrl(newsObject.getString("url"));
+                        newsInfo.setThumbNailURL(newsObject.getString("urlToImage"));
+                        newsInfo.setDesc(newsObject.getString("description"));
+                        if (newsObject.getString("description").equals("null")) {
                             continue;
                         }
                         Log.i("newsInfo", newsInfo.toString());
@@ -200,9 +206,12 @@ public class MainActivity extends AppCompatActivity {
         for(i = 0; i < pref.size(); i++) {
             sourcesId = sources.get(i).id;
             if(pref.get(sourcesId)) {
+                String url = "https://newsapi.org/v2/top-headlines?sources=" + sources.get(i).id + "&apiKey=" + getString(R.string.api_key);
                 new GetNews()
-                        .executeOnExecutor(THREAD_POOL_EXECUTOR, "https://newsapi.org/v1/articles?source=" + sources.get(i).id + "&apiKey=" + getString(R.string.api_key));
+                        .executeOnExecutor(THREAD_POOL_EXECUTOR, url);
                 counter++;
+                Log.i("Counter", counter + "");
+                Log.i("URL", url);
             }
         }
     }

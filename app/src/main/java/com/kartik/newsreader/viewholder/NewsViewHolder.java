@@ -20,8 +20,8 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     private TextView titleView;
     private TextView authorView;
     private RelativeLayout relativeLayout;
-    private TextView desc;
-    private CardView cardView;
+    //private TextView desc;
+    private ImageView imageBG;
 
     public NewsViewHolder(View v) {
         super(v);
@@ -29,16 +29,16 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         titleView = v.findViewById(R.id.title);
         authorView = v.findViewById(R.id.author);
         relativeLayout = v.findViewById(R.id.card_relative_layout);
-        desc = v.findViewById(R.id.description);
-        cardView = v.findViewById(R.id.card_view);
+        //desc = v.findViewById(R.id.description);
+        imageBG = v.findViewById(R.id.image_bg);
 
         titleView.setTypeface(FontService.getProductSans(v.getContext()));
         authorView.setTypeface(FontService.getProductSans(v.getContext()));
-        desc.setTypeface(FontService.getProductSans(v.getContext()));
+        //desc.setTypeface(FontService.getProductSans(v.getContext()));
 
         titleView.setBackgroundResource(R.color.trans);
         authorView.setBackgroundResource(R.color.trans);
-        desc.setBackgroundResource(R.color.trans);
+        //desc.setBackgroundResource(R.color.trans);
     }
 
     public TextView getTitleView() {
@@ -53,11 +53,11 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         return relativeLayout;
     }
 
-    public TextView getDesc() {
+    /*public TextView getDesc() {
         return desc;
-    }
+    }*/
 
-    public CardView getCardView() {
-        return cardView;
+    public ImageView getImageBG() {
+        return imageBG;
     }
 }

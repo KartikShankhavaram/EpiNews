@@ -32,6 +32,9 @@ import com.kartik.newsreader.glide.GlideApp;
 
 import java.util.ArrayList;
 
+import static com.kartik.newsreader.data.NewsInfo.AUTHOR_PREFIX;
+import static com.kartik.newsreader.data.NewsInfo.SOURCE_PREFIX;
+
 /**
  * Created by kartik on 7/11/17.
  */
@@ -63,34 +66,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
     public void onBindViewHolder(final NewsViewHolder holder, final int position) {
         final NewsInfo info = newsList.get(position);
         Log.i("data", info.toString());
-        holder.getAuthorView().setText(NewsInfo.AUTHOR_PREFIX + info.getAuthor());
-        holder.getAuthorView().setVisibility(info.getAuthor().equals("null") || info.getAuthor().equals("") || info.getAuthor().startsWith("http")?View.GONE:View.VISIBLE);
+        String a = String.format("%s %s", AUTHOR_PREFIX, info.getAuthor());
+        String b = String.format("%s %s", SOURCE_PREFIX, info.getSource());
+        holder.getAuthorView().setText(info.getAuthor().equals("null") || info.getAuthor().equals("") || info.getAuthor().startsWith("http")?b:a);
+        //holder.getAuthorView().setVisibility(info.getAuthor().equals("null") || info.getAuthor().equals("") || info.getAuthor().startsWith("http")?View.GONE:View.VISIBLE);
         holder.getTitleView().setText(info.getTitle());
-        holder.getDesc().setText(info.getDesc());
-        holder.getRelativeLayout().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), WebViewActivity.class);
-                intent.putExtra("url", info.getUrl());
-                v.getContext().startActivity(intent);
-            }
+        //holder.getDesc().setText(info.getDesc());
+        holder.getRelativeLayout().setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), WebViewActivity.class);
+            intent.putExtra("url", info.getUrl());
+            v.getContext().startActivity(intent);
         });
         Log.i("View", holder.toString());
-        if(!hasSize) {
-            ViewTreeObserver observer = holder.getCardView().getViewTreeObserver();
-            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    holder.getCardView().getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                    size = new Size(holder.getRelativeLayout().getMeasuredWidth(), holder.getCardView().getMeasuredHeight());
-                    Log.i("Image", "Loading!");
-                    loadImage(holder, position);
-                    hasSize = true;
-                }
-            });
-        } else {
-            loadImage(holder, position);
-        }
+        loadImage(holder, position);
         Log.i("View", holder.toString());
 
     }
@@ -114,20 +102,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
                 .error(R.drawable.newspaper)
                 .centerCrop()
                 .load(info.getThumbNailURL().equals("null")?R.drawable.newspaper:info.getThumbNailURL())
-                .into(new SimpleTarget<Bitmap>(size.getWidth(), size.getHeight()) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        if(resource.getWidth() > size.getWidth()) {
-                            resource.setWidth(size.getWidth());
-                        }
-                        if(resource.getHeight() > size.getHeight()) {
-                            resource.setHeight(size.getHeight());
-                        }
-                        Drawable d = new BitmapDrawable(mContext.getResources(), resource);
-                        d.setAlpha(70);
-                        holder.getRelativeLayout().setBackground(d);
-                        Log.i(info.getTitle(), "Image loaded!");
-                    }
-                });
+                .into(holder.getImageBG());
     }
 }

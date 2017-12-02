@@ -12,7 +12,9 @@ public class NewsInfo {
     private String url;
     private String thumbNailURL;
     private String desc;
-    public static final String AUTHOR_PREFIX = "by ";
+    private String source;
+    public static final String AUTHOR_PREFIX = "by";
+    public static final String SOURCE_PREFIX = "from";
 
     public String getTitle() {
         return title;
@@ -52,6 +54,14 @@ public class NewsInfo {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String toString() {
