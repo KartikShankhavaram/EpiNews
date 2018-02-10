@@ -80,7 +80,7 @@ public class ListviewAdapter extends ArrayAdapter<PublicationInfo> {
     }
 
     public void setPreferences(HashMap<String, Boolean> pref) {
-        this.pref = (pref == null)?new HashMap<String, Boolean>():pref;
+        this.pref = (pref == null)? new HashMap<>():pref;
     }
 
 
