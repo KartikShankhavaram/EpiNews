@@ -1,5 +1,6 @@
 package com.kartik.newsreader.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class WebViewActivity extends AppCompatActivity {
     ProgressBar pBar;
     final int maxProgress = 100;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.WebViewTheme);
@@ -40,6 +42,7 @@ public class WebViewActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 pBar.setVisibility(View.GONE);
+                Log.i("Loading", "Finished");
             }
         });
 

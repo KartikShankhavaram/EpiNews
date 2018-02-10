@@ -27,10 +27,22 @@
             android:layout_height="match_parent" >
 
         <ImageView
-            android:id="@+id/image_bg"
+           android:id="@+id/image_bg"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:src="@drawable/ic_image" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/newspaper" />
+            android:id="@+id/shimmer_loading">
+            
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_image"/>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

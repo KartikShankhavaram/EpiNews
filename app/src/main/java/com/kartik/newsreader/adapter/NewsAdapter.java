@@ -18,10 +18,12 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.activity.WebViewActivity;
 
@@ -98,10 +100,35 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
         final NewsInfo info = newsList.get(position);
         GlideApp.with(mContext)
                 .asBitmap()
-                .placeholder(R.drawable.loading_spinner)
-                .error(R.drawable.newspaper)
+                .error(R.drawable.ic_image)
                 .centerCrop()
-                .load(info.getThumbNailURL().equals("null")?R.drawable.newspaper:info.getThumbNailURL())
-                .into(holder.getImageBG());
+                .load(info.getThumbNailURL().equals("null")?R.drawable.ic_image:info.getThumbNailURL() + "a")
+                .into(new ImageViewTarget<Bitmap>(holder.getImageBG()) {
+                    @Override
+                    protected void setResource(@Nullable Bitmap resource) {
+                        holder.getImageBG().setImageBitmap(resource);
+                    }
+
+                    @Override
+                    public void onLoadStarted(@Nullable Drawable placeholder) {
+                        startLoading(holder.getShimmerLoadingView());
+                    }
+
+                    @Override
+                    public void onResourceReady(Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        stopLoading(holder.getShimmerLoadingView());
+                        holder.getImageBG().setImageBitmap(resource);
+                    }
+                });
+    }
+
+    private void startLoading(ShimmerFrameLayout layout) {
+        layout.setVisibility(View.VISIBLE);
+        layout.startShimmerAnimation();
+    }
+
+    private void stopLoading(ShimmerFrameLayout layout) {
+        layout.setVisibility(View.GONE);
+        layout.stopShimmerAnimation();
     }
 }

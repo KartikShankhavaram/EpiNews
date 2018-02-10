@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.kartik.newsreader.R;
 import com.kartik.newsreader.service.FontService;
 
@@ -22,6 +23,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
     private RelativeLayout relativeLayout;
     //private TextView desc;
     private ImageView imageBG;
+    private ShimmerFrameLayout shimmerLoadingView;
 
     public NewsViewHolder(View v) {
         super(v);
@@ -31,6 +33,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
         relativeLayout = v.findViewById(R.id.card_relative_layout);
         //desc = v.findViewById(R.id.description);
         imageBG = v.findViewById(R.id.image_bg);
+        shimmerLoadingView = v.findViewById(R.id.shimmer_loading);
 
         titleView.setTypeface(FontService.getProductSans(v.getContext()));
         authorView.setTypeface(FontService.getProductSans(v.getContext()));
@@ -59,5 +62,9 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView getImageBG() {
         return imageBG;
+    }
+
+    public ShimmerFrameLayout getShimmerLoadingView() {
+        return shimmerLoadingView;
     }
 }
